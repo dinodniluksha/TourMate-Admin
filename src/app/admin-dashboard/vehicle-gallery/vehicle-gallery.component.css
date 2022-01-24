@@ -9,3 +9,10 @@
 .available {
    background-color: chartreuse; 
 }
+
+.show {
+   background-color: rgb(189, 198, 241); 
+}
+.delete {
+   background-color: rgb(255, 172, 172); 
+}
