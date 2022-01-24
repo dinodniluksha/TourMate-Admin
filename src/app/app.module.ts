@@ -6,9 +6,6 @@ import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatCardModule } from '@angular/material/card';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -19,10 +16,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AppRoutingModule,
     GraphQLModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    MatCardModule,
-    FlexLayoutModule,
-    MatToolbarModule
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
