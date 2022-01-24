@@ -3,13 +3,16 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from "ngx-spinner";
 
-const GET_USERS = gql`
+const GET_VEHICLES = gql`
   query {
-  getUsers {
+  vehicles {
     id
-    login
-    avatar_url
+    type
+    imageUrl
+    isAvailable
+    description
   }
 }`;
 
@@ -20,20 +23,20 @@ const GET_USERS = gql`
 })
 export class VehicleGalleryComponent implements OnInit, OnDestroy {
   loading: boolean = true;
-  users: any;
-
+  vehicles: any;
   querySubscription: Subscription = new Subscription;
-  constructor(private apollo: Apollo) { }
+
+  constructor(private apollo: Apollo, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.querySubscription = this.apollo.watchQuery<any>({
-      query: GET_USERS
-    })
-      .valueChanges
+      query: GET_VEHICLES
+    }).valueChanges
       .subscribe(({ data, loading }) => {
         this.loading = loading;
-        this.users = data.getUsers;
-        console.log(this.users);
+        this.vehicles = data.vehicles;
+        console.log(this.vehicles);
         console.log(this.loading);
       });
   }
