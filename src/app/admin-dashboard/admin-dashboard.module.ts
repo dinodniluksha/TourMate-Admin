@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
@@ -36,6 +37,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     NgxSpinnerModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     MatGridListModule,
     MatDialogModule,
     ReactiveFormsModule,

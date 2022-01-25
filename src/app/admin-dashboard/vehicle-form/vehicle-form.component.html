@@ -1,6 +1,5 @@
-<p>vehicle form</p>
-
 <mat-toolbar>
+    <span>New Vehicle</span>
     <span class="fill-remaining-space"></span>
     <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
         <mat-icon>clear</mat-icon>
@@ -20,7 +19,11 @@
                     <input formControlName="imageUrl" matInput placeholder="Image Url">
                 </mat-form-field>
                 <mat-form-field>
-                    <input formControlName="isAvailable" matInput placeholder="Is Available">
+                    <mat-label>Set Availability</mat-label>
+                    <mat-select formControlName="isAvailable" matInput>
+                        <mat-option [value]="true">Available</mat-option>
+                        <mat-option [value]="false">Not Available</mat-option>
+                    </mat-select>
                 </mat-form-field>
                 <mat-form-field>
                     <input formControlName="description" matInput placeholder="Description">

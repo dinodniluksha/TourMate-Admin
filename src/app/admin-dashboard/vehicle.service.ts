@@ -39,7 +39,7 @@ export class VehicleService {
       id: '',
       type: '',
       imageUrl: 'https://firebasestorage.googleapis.com/v0/b/pro1-eece0.appspot.com/o/blue_car.jpeg?alt=media&token=83196cd6-c9fe-4da5-86ef-31f2128a98f7',
-      isAvailable: '',
+      isAvailable: null,
       description: '',
     });
   }
@@ -49,16 +49,12 @@ export class VehicleService {
     this.apollo.mutate({
       mutation: UPVOTE_POST,
       variables: {
-        "input": {
-          "id": "RTY-789346",
-          "type": "Car",
-          "imageUrl": "https://firebasestorage.googleapis.com/v0/b/pro1-eece0.appspot.com/o/blue_car.jpeg?alt=media&token=83196cd6-c9fe-4da5-86ef-31f2128a98f7",
-          "isAvailable": true,
-          "description": "This a trail aaaaa description"
-        }
+        "input": vehicle
       }
     }).subscribe(({ data }) => {
       console.log('got data', data);
+      window.alert('New vehicle is created successfully');
+      window.location.reload();
     }, (error) => {
       console.log('there was an error sending the query', error);
     });
