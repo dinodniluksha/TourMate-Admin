@@ -1,0 +1,38 @@
+<mat-toolbar>
+    <span>New Vehicle</span>
+    <span class="fill-remaining-space"></span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+        <mat-icon>clear</mat-icon>
+    </button>
+</mat-toolbar>
+<form [formGroup]="service.form" class="normal-form" (submit)="onSubmit()">
+    <mat-grid-list cols="1" rowHeight="350px">
+        <mat-grid-tile>
+            <div class="controles-container">
+                <mat-form-field>
+                    <input formControlName="id" matInput placeholder="ID">
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="type" matInput placeholder="Type">
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="imageUrl" matInput placeholder="Image Url">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Set Availability</mat-label>
+                    <mat-select formControlName="isAvailable" matInput>
+                        <mat-option [value]="true">Available</mat-option>
+                        <mat-option [value]="false">Not Available</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="description" matInput placeholder="Description">
+                </mat-form-field>
+                <div class="button-row">
+                    <button mat-raised-button color="primary" type="submit"
+                        [disabled]="service.form.invalid">Submit</button>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>
