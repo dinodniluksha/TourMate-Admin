@@ -29,3 +29,20 @@ div.container{
     .add-bottom-padding{
         padding-bottom: 10px;
     }
+
+.button {
+    cursor: pointer;
+}
+
+.available {
+   background-color: chartreuse; 
+}
+
+.unavailable {
+   background-color: rgb(247, 58, 90); 
+}
+
+.update {
+   background-color: rgb(0, 140, 255); 
+}
+
