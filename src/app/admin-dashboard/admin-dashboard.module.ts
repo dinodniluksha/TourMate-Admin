@@ -19,12 +19,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { SingleVehicleDisplayComponent } from './single-vehicle-display/single-vehicle-display.component';
 
 @NgModule({
   declarations: [
     AdminDashboardComponent,
     VehicleGalleryComponent,
-    VehicleFormComponent
+    VehicleFormComponent,
+    SingleVehicleDisplayComponent
   ],
   imports: [
     CommonModule,

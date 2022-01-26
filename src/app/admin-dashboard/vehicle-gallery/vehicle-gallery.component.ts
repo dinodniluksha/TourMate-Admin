@@ -4,6 +4,8 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { Subscription } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
+import { Router } from '@angular/router';
+import { Vehicle } from '../vehicle';
 
 const GET_VEHICLES = gql`
   query {
@@ -23,10 +25,11 @@ const GET_VEHICLES = gql`
 })
 export class VehicleGalleryComponent implements OnInit, OnDestroy {
   loading: boolean = true;
-  vehicles: any;
+  vehicles: Vehicle[] = [];
+  vehicle!: Vehicle;
   querySubscription: Subscription = new Subscription;
 
-  constructor(private apollo: Apollo, private spinner: NgxSpinnerService) { }
+  constructor(private apollo: Apollo, private spinner: NgxSpinnerService, private router: Router) { }
 
   ngOnInit(): void {
     this.spinner.show();
@@ -39,6 +42,17 @@ export class VehicleGalleryComponent implements OnInit, OnDestroy {
         console.log(this.vehicles);
         console.log(this.loading);
       });
+  }
+
+  showVehicle(vehicle: Vehicle) {
+    this.vehicle = vehicle;
+    //console.log(this.vehicle);
+    this.router.navigate(['/dashboard/vehicle/' + this.vehicle.id]);
+
+  }
+
+  deleteVehicle() {
+    console.log('Delete Vehicle');
   }
 
   ngOnDestroy() {
