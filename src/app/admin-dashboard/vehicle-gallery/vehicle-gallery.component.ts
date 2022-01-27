@@ -1,72 +1,47 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
-import { Subscription } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
 import { VehicleService } from '../vehicle.service';
 import { Vehicle } from '../vehicle';
-
-const GET_VEHICLES = gql`
-  query {
-  vehicles {
-    id
-    type
-    imageUrl
-    isAvailable
-    description
-  }
-}`;
 
 @Component({
   selector: 'app-vehicle-gallery',
   templateUrl: './vehicle-gallery.component.html',
   styleUrls: ['./vehicle-gallery.component.css']
 })
-export class VehicleGalleryComponent implements OnInit, OnDestroy {
+export class VehicleGalleryComponent implements OnInit {
   loading: boolean = true;
   vehicles: Vehicle[] = [];
   vehicle!: Vehicle;
-  querySubscription: Subscription = new Subscription;
 
   constructor(
-    private apollo: Apollo,
     private spinner: NgxSpinnerService,
     private service: VehicleService,
-    private router: Router) { }
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
-    this.fetchVehicles();
+    this.buildVehicleGallery();
   }
 
-  fetchVehicles() {
+  buildVehicleGallery() {
     this.spinner.show();
-    this.querySubscription = this.apollo.watchQuery<any>({
-      query: GET_VEHICLES
-    }).valueChanges
-      .subscribe(({ data, loading }) => {
-        this.loading = loading;
-        this.vehicles = data.vehicles;
-        console.log(this.vehicles);
-        console.log(this.loading);
-      });
+    this.service.getVehicles().subscribe(
+      (result: any) => {
+        console.log(result.data);
+        console.log(result.loading);
+        this.loading = result.data.loading;
+        this.vehicles = result.data.vehicles;
+      }
+    );
   }
 
-  showVehicle(vehicle: Vehicle) {
-    this.vehicle = vehicle;
-    //console.log(this.vehicle);
+  showVehicle(vehicleId: string) {
     this.service.updateOn = false;
-    this.router.navigate(['/dashboard/vehicle/' + this.vehicle.id]);
-
+    this.router.navigate(['/dashboard/vehicle/' + vehicleId]);
   }
 
   deleteVehicle(vehicleId: string) {
-    console.log('Delete Vehicle');
     this.service.deleteVehicle(vehicleId);
-  }
-
-  ngOnDestroy() {
-    this.querySubscription.unsubscribe();
   }
 }

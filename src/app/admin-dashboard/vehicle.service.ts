@@ -3,6 +3,30 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { Apollo, gql } from 'apollo-angular';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { retry, catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+
+const GET_VEHICLES = gql`
+  query {
+  vehicles {
+    id
+    type
+    imageUrl
+    isAvailable
+    description
+  }
+}`;
+
+const GET_VEHICLE = gql`
+  query Vehicle($vehicleId: ID) {
+  vehicle(id: $vehicleId) {
+    id
+    type
+    imageUrl
+    isAvailable
+    description
+  }
+}`;
 
 const CREATE_VEHICLE = gql`
   mutation CreateVehicle($input: VehicleInput) {
@@ -43,9 +67,7 @@ const DELETE_VEHICLE = gql`
   providedIn: 'root'
 })
 export class VehicleService {
-
-  constructor(private apollo: Apollo, private router: Router, private location: Location) { }
-
+  result: any;
   updateOn: boolean = false;
   form: FormGroup = new FormGroup({
     id: new FormControl(''),
@@ -53,11 +75,15 @@ export class VehicleService {
     imageUrl: new FormControl(''),
     isAvailable: new FormControl(''),
     description: new FormControl(''),
-
   });
 
+  constructor(
+    private apollo: Apollo,
+    private router: Router,
+    private location: Location,
+  ) { }
+
   initializeFormGroup() {
-    console.log('Yes...run initilaizaion function');
     this.form.setValue({
       id: '',
       type: '',
@@ -68,7 +94,6 @@ export class VehicleService {
   }
 
   initializeUpdateFormGroup(vehicle: any) {
-    console.log('Yes...run initilaizaion function');
     this.form.setValue({
       id: vehicle.id,
       type: vehicle.type,
@@ -78,16 +103,34 @@ export class VehicleService {
     });
   }
 
+  getVehicles(): Observable<any> {
+    return this.apollo.watchQuery<any>({
+      query: GET_VEHICLES
+    }).valueChanges
+      .pipe(retry(1),
+        catchError(this.httpError));
+  }
 
-  newVehicle(vehicle: any) {
-    console.log(vehicle);
+  getVehicle(id: string): Observable<any> {
+    return this.apollo.watchQuery<any>({
+      query: GET_VEHICLE,
+      variables: {
+        vehicleId: id
+      }
+    }).valueChanges
+      .pipe(retry(1),
+        catchError(this.httpError));
+  }
+
+  createVehicle(vehicle: any) {
     this.apollo.mutate({
       mutation: CREATE_VEHICLE,
       variables: {
         "input": vehicle
       }
     }).subscribe(({ data }) => {
-      console.log('got data', data);
+      //console.log('got data', data);
+      this.result = data;
       window.alert('New vehicle is created successfully');
       window.location.reload();
     }, (error) => {
@@ -96,14 +139,14 @@ export class VehicleService {
   }
 
   updateVehicle(vehicle: any) {
-    console.log(vehicle);
     this.apollo.mutate({
       mutation: UPDATE_VEHICLE,
       variables: {
         "input": vehicle
       }
     }).subscribe(({ data }) => {
-      console.log('got data', data);
+      //console.log('got data', data);
+      this.result = data;
       window.alert('Vehicle is updated successfully');
       window.location.reload();
     }, (error) => {
@@ -120,7 +163,8 @@ export class VehicleService {
         "input": vehicleId
       }
     }).subscribe(({ data }) => {
-      console.log('got data', data);
+      //console.log('got data', data);
+      this.result = data;
       window.alert('Vehicle is deleted successfully');
       window.location.reload();
     }, (error) => {
@@ -130,7 +174,16 @@ export class VehicleService {
       this.location.back();
   }
 
-  populateForm(vehicle: object) {
-    this.form.setValue(vehicle);
+  httpError(error: any) {
+    let msg = '';
+    if (error.error instanceof ErrorEvent) {
+      // client side error
+      msg = error.error.message;
+    } else {
+      // server side error
+      msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(msg);
+    return throwError(msg);
   }
 }

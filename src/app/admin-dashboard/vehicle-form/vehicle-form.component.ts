@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicle.service';
 import { MatDialogRef } from "@angular/material/dialog";
 
-
 @Component({
   selector: 'app-vehicle-form',
   templateUrl: './vehicle-form.component.html',
@@ -15,15 +14,13 @@ export class VehicleFormComponent implements OnInit {
     private dialogRef: MatDialogRef<VehicleFormComponent>,
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   onSubmit() {
-    console.log('Now submit form');
     if (this.service.updateOn)
       this.service.updateVehicle(this.service.form.value);
     else
-      this.service.newVehicle(this.service.form.value);
+      this.service.createVehicle(this.service.form.value);
     this.service.form.reset();
     this.service.initializeFormGroup();
     this.onClose();

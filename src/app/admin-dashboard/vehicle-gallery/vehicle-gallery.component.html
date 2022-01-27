@@ -1,7 +1,6 @@
 <div *ngIf=!loading class="content">
     <div fxLayout="row wrap" fxLayoutGap="16px grid">
         <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let vehicle of vehicles">
-
             <mat-card class="mat-elevation-z4">
                 <mat-card-header>
                     <mat-card-title>Vehicle ID - {{vehicle.id}}
@@ -12,9 +11,8 @@
                             <button mat-button class="unavailable">UNAVAILABLE</button>
                         </a>
                     </mat-card-title>
-
                 </mat-card-header>
-                <a (click)="showVehicle(vehicle)" class="button">
+                <a (click)="showVehicle(vehicle.id)" class="button">
                     <img mat-card-image src="{{vehicle.imageUrl}}">
                 </a>
                 <mat-card-content>
@@ -23,11 +21,10 @@
                     </p>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-button class="show" (click)="showVehicle(vehicle)">SHOW</button>
+                    <button mat-button class="show" (click)="showVehicle(vehicle.id)">SHOW</button>
                     <button mat-button class="delete" (click)="deleteVehicle(vehicle.id)">DELETE</button>
                 </mat-card-actions>
             </mat-card>
-
         </div>
     </div>
 </div>
@@ -35,6 +32,6 @@
 <div *ngIf=loading>
     <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-clip-rotate-pulse"
         [fullScreen]="true">
-        <p style="color: white"> Loading... </p>
+        <p style="color: white; margin-top: 25px;"> Loading... </p>
     </ngx-spinner>
 </div>
