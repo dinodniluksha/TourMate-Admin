@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicle.service';
-import { MatDialogRef, MatDialogConfig } from "@angular/material/dialog";
+import { MatDialogRef } from "@angular/material/dialog";
 
 
 @Component({
@@ -13,7 +13,6 @@ export class VehicleFormComponent implements OnInit {
   constructor(
     public service: VehicleService,
     private dialogRef: MatDialogRef<VehicleFormComponent>,
-
   ) { }
 
   ngOnInit(): void {
