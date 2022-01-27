@@ -80,6 +80,7 @@ export class SingleVehicleDisplayComponent implements OnInit, OnDestroy {
 
   deleteVehicle() {
     console.log('Delete Vehicle');
+    this.service.deleteVehicle(this.vehicle.id);
   }
 
   ngOnDestroy() {
