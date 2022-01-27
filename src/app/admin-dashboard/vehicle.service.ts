@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl } from "@angular/forms";
 import { Apollo, gql } from 'apollo-angular';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 const CREATE_VEHICLE = gql`
   mutation CreateVehicle($input: VehicleInput) {
@@ -30,12 +32,19 @@ const UPDATE_VEHICLE = gql`
   }
 }`;
 
+const DELETE_VEHICLE = gql`
+  mutation DeleteVehicle($input: ID) {
+  deleteVehicle(id: $input) {
+    msg
+  }
+}`;
+
 @Injectable({
   providedIn: 'root'
 })
 export class VehicleService {
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo, private router: Router, private location: Location) { }
 
   updateOn: boolean = false;
   form: FormGroup = new FormGroup({
@@ -100,6 +109,25 @@ export class VehicleService {
     }, (error) => {
       console.log('there was an error sending the query', error);
     });
+  }
+
+  deleteVehicle(vehicleId: string) {
+    console.log(vehicleId);
+    //console.log(this.router.url);
+    this.apollo.mutate({
+      mutation: DELETE_VEHICLE,
+      variables: {
+        "input": vehicleId
+      }
+    }).subscribe(({ data }) => {
+      console.log('got data', data);
+      window.alert('Vehicle is deleted successfully');
+      window.location.reload();
+    }, (error) => {
+      console.log('there was an error sending the query', error);
+    });
+    if (this.router.url != '/dashboard/gellery')
+      this.location.back();
   }
 
   populateForm(vehicle: object) {

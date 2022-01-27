@@ -37,6 +37,10 @@ export class VehicleGalleryComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.fetchVehicles();
+  }
+
+  fetchVehicles() {
     this.spinner.show();
     this.querySubscription = this.apollo.watchQuery<any>({
       query: GET_VEHICLES
@@ -57,8 +61,9 @@ export class VehicleGalleryComponent implements OnInit, OnDestroy {
 
   }
 
-  deleteVehicle() {
+  deleteVehicle(vehicleId: string) {
     console.log('Delete Vehicle');
+    this.service.deleteVehicle(vehicleId);
   }
 
   ngOnDestroy() {
