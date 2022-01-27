@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import { Subscription } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
+import { VehicleService } from '../vehicle.service';
 import { Vehicle } from '../vehicle';
 
 const GET_VEHICLES = gql`
@@ -29,7 +30,11 @@ export class VehicleGalleryComponent implements OnInit, OnDestroy {
   vehicle!: Vehicle;
   querySubscription: Subscription = new Subscription;
 
-  constructor(private apollo: Apollo, private spinner: NgxSpinnerService, private router: Router) { }
+  constructor(
+    private apollo: Apollo,
+    private spinner: NgxSpinnerService,
+    private service: VehicleService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.spinner.show();
@@ -47,6 +52,7 @@ export class VehicleGalleryComponent implements OnInit, OnDestroy {
   showVehicle(vehicle: Vehicle) {
     this.vehicle = vehicle;
     //console.log(this.vehicle);
+    this.service.updateOn = false;
     this.router.navigate(['/dashboard/vehicle/' + this.vehicle.id]);
 
   }

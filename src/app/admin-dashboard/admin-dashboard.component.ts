@@ -17,16 +17,13 @@ export class AdminDashboardComponent implements OnInit {
 
   onCreate() {
     console.log('Add new one');
+    this.service.updateOn = false;
     this.service.initializeFormGroup();
-
     const dialogConfig = new MatDialogConfig();
-
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "60%";
-
     const dialogRef = this.dialog.open(VehicleFormComponent,
       dialogConfig);
-
   }
 }

@@ -1,7 +1,6 @@
-import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicle.service';
-import { MatDialogRef, MatDialogConfig } from "@angular/material/dialog";
+import { MatDialogRef } from "@angular/material/dialog";
 
 
 @Component({
@@ -14,7 +13,6 @@ export class VehicleFormComponent implements OnInit {
   constructor(
     public service: VehicleService,
     private dialogRef: MatDialogRef<VehicleFormComponent>,
-
   ) { }
 
   ngOnInit(): void {
@@ -22,7 +20,10 @@ export class VehicleFormComponent implements OnInit {
 
   onSubmit() {
     console.log('Now submit form');
-    this.service.newVehicle(this.service.form.value)
+    if (this.service.updateOn)
+      this.service.updateVehicle(this.service.form.value);
+    else
+      this.service.newVehicle(this.service.form.value);
     this.service.form.reset();
     this.service.initializeFormGroup();
     this.onClose();
@@ -34,6 +35,7 @@ export class VehicleFormComponent implements OnInit {
   }
 
   onClose() {
+    this.service.updateOn = false;
     this.dialogRef.close();
   }
 }
