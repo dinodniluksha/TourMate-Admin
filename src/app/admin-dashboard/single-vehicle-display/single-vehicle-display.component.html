@@ -1,5 +1,5 @@
 <div *ngIf=!loading class="content">
-    <mat-grid-list cols="1" rowHeight="650px">
+    <mat-grid-list cols="{{service.updateOn ? 2 : 1}}" rowHeight="650px">
         <mat-grid-tile>
             <mat-card class="mat-elevation-z4">
                 <mat-card-header>
@@ -20,10 +20,17 @@
                     </p>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-button class="update" (click)="updateVehicle()">UPDATE</button>
+                    <button mat-button class="update" (click)="updateVehicle()" *ngIf=!service.updateOn>UPDATE</button>
+                    <button mat-button class="delete" (click)="deleteVehicle()">DELETE</button>
                 </mat-card-actions>
             </mat-card>
         </mat-grid-tile>
-        <!-- <mat-grid-tile>2</mat-grid-tile> -->
     </mat-grid-list>
+</div>
+
+<div *ngIf=loading>
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-clip-rotate-pulse"
+        [fullScreen]="true">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
 </div>

@@ -1,5 +1,5 @@
 <mat-toolbar>
-    <span>New Vehicle</span>
+    <span>{{service.updateOn ? "Updating Vehicle" : "Adding Vehicle"}}</span>
     <span class="fill-remaining-space"></span>
     <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
         <mat-icon>clear</mat-icon>
@@ -9,7 +9,7 @@
     <mat-grid-list cols="1" rowHeight="350px">
         <mat-grid-tile>
             <div class="controles-container">
-                <mat-form-field>
+                <mat-form-field *ngIf=!service.updateOn>
                     <input formControlName="id" matInput placeholder="ID">
                 </mat-form-field>
                 <mat-form-field>
