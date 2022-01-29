@@ -3,7 +3,7 @@
         <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let vehicle of vehicles">
             <mat-card class="mat-elevation-z4">
                 <mat-card-header>
-                    <mat-card-title>Vehicle ID - {{vehicle.id}}
+                    <mat-card-title>{{vehicle.id}}
                         <a *ngIf="vehicle.isAvailable">
                             <button mat-button class="available">AVAILABLE</button>
                         </a>
