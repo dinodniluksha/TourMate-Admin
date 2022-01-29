@@ -13,6 +13,9 @@ export class VehicleGalleryComponent implements OnInit {
   loading: boolean = true;
   vehicles: Vehicle[] = [];
   vehicle!: Vehicle;
+  value!: boolean;
+  availabilityRack: boolean[] = [];
+  availability: boolean = true;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -28,10 +31,11 @@ export class VehicleGalleryComponent implements OnInit {
     this.spinner.show();
     this.service.getVehicles().subscribe(
       (result: any) => {
-        console.log(result.data);
-        console.log(result.loading);
+        //console.log(result.data);
+        //console.log(result.loading);
         this.loading = result.data.loading;
         this.vehicles = result.data.vehicles;
+        this.initializeAvailability();
       }
     );
   }
@@ -43,5 +47,19 @@ export class VehicleGalleryComponent implements OnInit {
 
   deleteVehicle(vehicleId: string) {
     this.service.deleteVehicle(vehicleId);
+  }
+
+  handleAvailabilityChange(point: number, id: string, value: boolean) {
+    this.availabilityRack[point] = value;
+    this.service.updateVehicle({
+      "id": id,
+      "isAvailable": value
+    });
+  }
+
+  initializeAvailability() {
+    for (let i = 0; i < this.vehicles.length; i++) {
+      this.availabilityRack.push(this.vehicles[i].isAvailable);
+    }
   }
 }
