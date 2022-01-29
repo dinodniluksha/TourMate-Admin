@@ -15,6 +15,7 @@ export class SingleVehicleDisplayComponent implements OnInit {
   loading: boolean = true;
   id!: any;
   vehicle!: Vehicle;
+  availability!: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,10 +38,11 @@ export class SingleVehicleDisplayComponent implements OnInit {
     this.spinner.show();
     this.service.getVehicle(vehicleId).subscribe(
       (result: any) => {
-        console.log(result.data);
-        console.log(result.loading);
+        //console.log(result.data);
+        //console.log(result.loading);
         this.loading = result.data.loading;
         this.vehicle = result.data.vehicle;
+        this.availability = result.data.vehicle.isAvailable
       }
     );
   }
@@ -58,5 +60,12 @@ export class SingleVehicleDisplayComponent implements OnInit {
 
   deleteVehicle() {
     this.service.deleteVehicle(this.vehicle.id);
+  }
+
+  handleAvailabilityChange(id: string, value: boolean) {
+    this.service.updateVehicle({
+      "id": id,
+      "isAvailable": value
+    });
   }
 }
