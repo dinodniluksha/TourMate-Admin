@@ -8,7 +8,7 @@
                             {{vehicle.id}}
                         </div>
                     </mat-card-title>
-                    <div style="width: 50%;">
+                    <div style="width: 43%;">
                         <mat-select [(value)]="availabilityRack[i]" matInput
                             (selectionChange)="handleAvailabilityChange(i, vehicle.id, $event.value)"
                             class="mat-select-content {{availabilityRack[i] ? 'available' : 'unavailable'}}">
@@ -17,8 +17,9 @@
                         </mat-select>
                     </div>
                     <div class="fill-remaining-space"></div>
-                    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                        <mat-icon>{{vehicle.isVisible ? "visibility" : "visibility_off"}}</mat-icon>
+                    <button mat-mini-fab color="primary" aria-label="Button with a visibility_on_off icon"
+                        (click)="updateVisibility(i, vehicle.id)">
+                        <mat-icon>{{visibilityRack[i] ? "visibility" : "visibility_off"}}</mat-icon>
                     </button>
                 </mat-card-header>
                 <a (click)="showVehicle(vehicle.id)" class="button">
