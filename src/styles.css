@@ -42,6 +42,16 @@ div.container{
    font-size: larger;
  } 
 
+.charge-box{
+   font-size: 17px; 
+   color: rgb(38, 16, 179); 
+   font-weight: bold;
+}
+
+.icon-display {
+   transform: scale(1);
+}
+
 .available {
    background-color: chartreuse; 
 }
