@@ -16,6 +16,7 @@ export class SingleVehicleDisplayComponent implements OnInit {
   id!: any;
   vehicle!: Vehicle;
   availability!: boolean;
+  visibility!: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -42,7 +43,8 @@ export class SingleVehicleDisplayComponent implements OnInit {
         //console.log(result.loading);
         this.loading = result.data.loading;
         this.vehicle = result.data.vehicle;
-        this.availability = result.data.vehicle.isAvailable
+        this.availability = result.data.vehicle.isAvailable;
+        this.visibility = result.data.vehicle.isVisible;
       }
     );
   }
@@ -66,6 +68,14 @@ export class SingleVehicleDisplayComponent implements OnInit {
     this.service.updateVehicle({
       "id": id,
       "isAvailable": value
+    });
+  }
+
+  updateVisibility(id: string) {
+    this.visibility = !this.visibility;
+    this.service.updateVehicle({
+      "id": id,
+      "isVisible": this.visibility
     });
   }
 }
