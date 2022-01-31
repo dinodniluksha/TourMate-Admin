@@ -4,23 +4,30 @@
             <mat-card class="mat-elevation-z4">
                 <mat-card-header>
                     <mat-card-title>
-                        <div style="height: 40px;">{{vehicle.id}}</div>
+                        <div style="height: 40px;">
+                            {{vehicle.id}}
+                        </div>
                     </mat-card-title>
                     <div style="width: 50%;">
                         <mat-select [(value)]="availabilityRack[i]" matInput
                             (selectionChange)="handleAvailabilityChange(i, vehicle.id, $event.value)"
                             class="mat-select-content {{availabilityRack[i] ? 'available' : 'unavailable'}}">
-                            <mat-option [value]="true">Available</mat-option>
-                            <mat-option [value]="false">Not Available</mat-option>
+                            <mat-option [value]="true">AVAILABLE</mat-option>
+                            <mat-option [value]="false">UNAVAILABLE</mat-option>
                         </mat-select>
                     </div>
+                    <div class="fill-remaining-space"></div>
+                    <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                        <mat-icon>{{vehicle.isVisible ? "visibility" : "visibility_off"}}</mat-icon>
+                    </button>
                 </mat-card-header>
                 <a (click)="showVehicle(vehicle.id)" class="button">
                     <img mat-card-image src="{{vehicle.imageUrl}}">
                 </a>
                 <mat-card-content>
-                    <p>
-                        <span>{{vehicle.description}}</span>
+                    <p class="charge-box">
+                        <span>Charge: </span>
+                        <span>{{vehicle.charge}}</span>
                     </p>
                 </mat-card-content>
                 <mat-card-actions>

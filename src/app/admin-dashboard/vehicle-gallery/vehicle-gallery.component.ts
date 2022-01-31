@@ -62,4 +62,8 @@ export class VehicleGalleryComponent implements OnInit {
       this.availabilityRack.push(this.vehicles[i].isAvailable);
     }
   }
+
+  setVisibility() {
+    //console.log('Set Visibility...');
+  }
 }

@@ -13,7 +13,9 @@ const GET_VEHICLES = gql`
     type
     imageUrl
     isAvailable
+    charge
     description
+    isVisible
   }
 }`;
 
@@ -24,7 +26,9 @@ const GET_VEHICLE = gql`
     type
     imageUrl
     isAvailable
+    charge
     description
+    isVisible
   }
 }`;
 
@@ -37,7 +41,9 @@ const CREATE_VEHICLE = gql`
       type
       imageUrl
       isAvailable
+      charge
       description
+      isVisible
     }
   }
 }`;
@@ -51,7 +57,9 @@ const UPDATE_VEHICLE = gql`
       type
       imageUrl
       isAvailable
+      charge
       description
+      isVisible
     }
   }
 }`;
@@ -74,7 +82,9 @@ export class VehicleService {
     type: new FormControl(''),
     imageUrl: new FormControl(''),
     isAvailable: new FormControl(''),
+    charge: new FormControl(''),
     description: new FormControl(''),
+    isVisible: new FormControl(''),
   });
 
   constructor(
@@ -89,7 +99,9 @@ export class VehicleService {
       type: '',
       imageUrl: 'https://firebasestorage.googleapis.com/v0/b/pro1-eece0.appspot.com/o/blue_car.jpeg?alt=media&token=83196cd6-c9fe-4da5-86ef-31f2128a98f7',
       isAvailable: null,
+      charge: '',
       description: '',
+      isVisible: null,
     });
   }
 
@@ -99,7 +111,9 @@ export class VehicleService {
       type: vehicle.type,
       imageUrl: vehicle.imageUrl,
       isAvailable: vehicle.isAvailable,
+      charge: vehicle.charge,
       description: vehicle.description,
+      isVisible: vehicle.isVisible,
     });
   }
 

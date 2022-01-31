@@ -6,7 +6,7 @@
     </button>
 </mat-toolbar>
 <form [formGroup]="service.form" class="normal-form" (submit)="onSubmit()">
-    <mat-grid-list cols="1" rowHeight="350px">
+    <mat-grid-list cols="1" rowHeight="450px">
         <mat-grid-tile>
             <div class="controles-container">
                 <mat-form-field *ngIf=!service.updateOn>
@@ -22,11 +22,21 @@
                     <mat-label>Set Availability</mat-label>
                     <mat-select formControlName="isAvailable" matInput>
                         <mat-option [value]="true">Available</mat-option>
-                        <mat-option [value]="false">Not Available</mat-option>
+                        <mat-option [value]="false">Unavailable</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field>
+                    <input formControlName="charge" matInput placeholder="Charge">
+                </mat-form-field>
+                <mat-form-field>
                     <input formControlName="description" matInput placeholder="Description">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Visibility</mat-label>
+                    <mat-select formControlName="isVisible" matInput>
+                        <mat-option [value]="true">Visible</mat-option>
+                        <mat-option [value]="false">Invisible</mat-option>
+                    </mat-select>
                 </mat-form-field>
                 <div class="button-row">
                     <button mat-raised-button color="primary" type="submit"
